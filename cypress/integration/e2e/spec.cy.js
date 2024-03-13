@@ -1,4 +1,10 @@
-const { getCurrentDate } = require('../../../utils');
+const { getCurrentDate } = require('../e2e/utils');
+const { selectors, text } = require('../e2e/selectors');
+
+const fixturePath = 'e2e/fixtures.json';
+const producsPath = 'e2e/products.json';
+const mainPagePath = '/index.html';
+const productDetailsPageTemplate = 'prod.html?idp_=';
 
 describe('E-commerce Purchase Process', () => {
 
@@ -8,62 +14,64 @@ describe('E-commerce Purchase Process', () => {
     cy.contains(product.name).should('exist')
     cy.contains(product.price).should('exist')
     cy.contains(product.name).click()
-    cy.url().should('include', `prod.html?idp_=${product.id}`)
-    cy.contains('Add to cart').click()
+    cy.url().should('include', `${productDetailsPageTemplate}${product.id}`)
+    
+    cy.contains(text.addToCartText).click()
+
     cy.on('window:alert', (str) => {
-      expect(str).to.equal('Product added')
+      expect(str).to.equal(text.productAddedText)
     })
   };
 
   beforeEach(() => {
     cy.visit('/')
-    cy.fixture('products.json').then((loadedProducts) => {
+    cy.fixture(producsPath).then((loadedProducts) => {
       products = loadedProducts;
     });
   });
 
-  it('Gets, types and asserts', () => {
+  it('Completes form and initiates purchase', () => {
     products.forEach(product => {
       addProductToCart(product);
-      cy.contains('Home').click()
+      cy.contains(text.homeTabText).click() 
     });
 
-    cy.contains('Cart').click()
+    cy.contains(text.cartTabText).click() 
 
     products.forEach(product => {
       cy.contains(product.name).should('exist')
       cy.contains(product.price).should('exist')
     });
 
-    cy.contains('Place Order').click()
+    cy.contains(text.placeOrderText).click()
 
-    cy.get('#orderModal').within(() => {
+    cy.get(selectors.orderModal).within(() => {
       cy.contains(products.reduce((a, b) => a + parseInt(b.price), 0).toString()).should('exist')
       
-      cy.fixture('fixtures.json').then((data) => {
-        cy.get('#name').type(data.name)
-        cy.wait(500)
-        cy.get('#country').type(data.country)
-        cy.get('#city').type(data.city)
-        cy.get('#card').type(data.card)
-        cy.get('#month').type(data.month)
-        cy.get('#year').type(data.year)
+      cy.fixture(fixturePath).then((data) => {
+        cy.get(selectors.nameInput).type(data.name)
+        cy.get(selectors.countryInput).type(data.country)
+        cy.get(selectors.cityInput).type(data.city)
+        cy.get(selectors.cardInput).type(data.card)
+        cy.get(selectors.monthInput).type(data.month)
+        cy.get(selectors.yearInput).type(data.year)
       })
-
-      cy.contains('Purchase').click()
+      
+      cy.contains(text.purchaseButtonText).click()
+      
     })
 
-    cy.get('.sweet-alert.visible.showSweetAlert').within(() => {
-      cy.contains('Thank you for your purchase!').should('exist')
+    cy.get(selectors.alert).within(() => {
+      cy.contains(text.purchaseSuccessText).should('exist')
       cy.contains(products.reduce((a, b) => a + parseInt(b.price), 0).toString() + ' USD').should('exist')
-      cy.fixture('fixtures.json').then((data) => {
+      cy.fixture(fixturePath).then((data) => {
         cy.contains(data.name)
         cy.contains(data.card)
         cy.contains(getCurrentDate())
       })
-      cy.contains('OK').click()
+      cy.contains(text.purchaseOKText).click()
     })
 
-    cy.url().should('eq', Cypress.config().baseUrl + '/index.html')
+    cy.url().should('eq', Cypress.config().baseUrl + mainPagePath)
   })
 });

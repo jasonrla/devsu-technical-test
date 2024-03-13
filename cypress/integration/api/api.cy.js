@@ -3,13 +3,14 @@ const { randomUserCredential } = require('../api/utils');
 const API_BASE_URL = Cypress.config('apiBaseUrl');
 const SIGNUP_URL = `${API_BASE_URL}/signup`;
 const LOGIN_URL = `${API_BASE_URL}/login`;
+const fixturePath = 'api/testData.json';
 
 describe('API Tests', () => {
 
     let testData;
 
     before(() => {
-        cy.fixture('api/testData.json').then((data) => {
+        cy.fixture(fixturePath).then((data) => {
             testData = data;
         });
     });
