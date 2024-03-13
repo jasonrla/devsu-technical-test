@@ -1,0 +1,12 @@
+[
+    { 
+        "id": "1",
+        "name": "Samsung galaxy s6", 
+        "price": "360"
+    },
+    { 
+        "id": "8",
+        "name": "Sony vaio i5", 
+        "price": "790"
+    }
+]
