@@ -1,0 +1,42 @@
+{
+    "newUser": {
+        "expectedResult": {
+            "status": 200,
+            "response": ""
+        }
+    },
+    "existingUser": {
+        "credentials": {
+            "username": "user-826660",
+            "password": "pass-329906"
+        },
+        "expectedResult": {
+            "status": 200,
+            "response": {
+                "errorMessage": "This user already exist."
+            }
+        }
+    },
+    "correctCredentials": {
+        "credentials": {
+            "username": "user-826660",
+            "password": "pass-329906"
+        },
+        "expectedResult": {
+            "status": 200,
+            "response": "Auth_token:"
+        }
+    },
+    "incorrectCredentials": {
+        "credentials": {
+            "username": "user-826660",
+            "password": "111111"
+        },
+        "expectedResult": {
+            "status": 200,
+            "response": {
+                "errorMessage": "Wrong password."
+            }
+        }
+    }
+}

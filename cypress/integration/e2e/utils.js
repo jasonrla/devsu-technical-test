@@ -4,5 +4,5 @@ function getCurrentDate() {
 }
 
 module.exports = {
-    getCurrentDate,
+    getCurrentDate
 };

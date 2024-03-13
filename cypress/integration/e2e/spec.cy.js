@@ -1,4 +1,4 @@
-const { getCurrentDate } = require('../../utils');
+const { getCurrentDate } = require('../../../utils');
 
 describe('E-commerce Purchase Process', () => {
 
