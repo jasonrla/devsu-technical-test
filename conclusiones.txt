@@ -1,0 +1,26 @@
+Here are the findings from the tests:
+
+E2E tests
+---------
+
+1. Different alerts are managed in the flow, for example when adding a product to the cart and when purchased is successful
+2. Some elements such as Home, Cart, Place Order, do not have an id, so if you use an xpath or css, 
+there is a possible error if this change in the html
+3. It lets to make a purchase if no items has been added to the cart
+4. The values of the form have no format validation, so you can enter any character even in the card field.
+5. The country field is displayed as a text box, but it would be better if it is displayed as a listbox with the list of countries to select.
+The card, month and year fields should be displayed in a way that the user knows that it is a payment platform,
+so the card data should not be displayed in full but you could use asterisks as is commonly used. 
+In addition a CVV (Card Verification Value) and email field are required, as these are data that payment platforms request for a transaction.
+7. When a new purchase is made and a successful message is displayed, that message also includes the current date but it shows an incorrect month. 
+To avoid errors in the tests and not to terminate the flow, the date is validated with this incorrect value.
+
+API tests
+---------
+
+1. When signup with an "existing user", the status code should not be 200, instead it should be 409 Conflict
+2. When signup with an "new user", the status code should not be 200, instead it should be 201 Created 
+and the response should contain an indicator of success, currently is shown an empty string
+3. When login with "correct credentials", the response should be in JSON format, currently it is shown as string
+4. When login with "incorrect credentials", the status code should not be 200, instead it should be 401 Unauthorized
+5. There is no user lockout implemented when logging in with "incorrect credentials" typically more than three times
