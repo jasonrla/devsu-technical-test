@@ -6,7 +6,6 @@ module.exports = defineConfig({
     baseUrl: 'https://demoblaze.com',
     apiBaseUrl: 'https://api.demoblaze.com',
     setupNodeEvents(on, config) {
-      // implement node event listeners here
     },
     "defaultCommandTimeout": 5000
   },
