@@ -42,6 +42,8 @@ To run in headless mode:
 ```bash
 npx cypress run --spec "cypress/integration/e2e/spec.cy.js"
 ```
+[See E2E test video demonstration](https://drive.google.com/file/d/1P_XLpExIMswP_RT_AmWMiJGvD8wkgzbz/view?usp=sharing)
+
 
 ### API Tests
 To run the API tests:
@@ -55,3 +57,5 @@ To run in headless mode:
 ```bash
 npx cypress run --spec "cypress/integration/api/api.cy.js"
 ```
+
+[See API test video demonstration](https://drive.google.com/file/d/1cVxhsLKnEXrlzW76K1cACjtgDoJJN__2/view?usp=sharing)
